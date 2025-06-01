@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Final - Programación Web</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: none;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            padding: 20px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .table th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-container" id="alertContainer"></div>
+    
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold mb-3">Proyecto Final</h1>
+                    <h2 class="text-primary">Programación Web</h2>
+                    <p class="lead">Formulario con validación, base de datos y despliegue en la nube</p>
+                </div>
+                
+                <div class="card mb-5">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-user-plus me-2"></i>Formulario de Registro</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="icon-container">
+                            <div class="icon-circle">
+                                <i class="fas fa-user-edit"></i>
+                            </div>
+                        </div>
+                        
+                        <form id="registrationForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombre" class="form-label">Nombre Completo</label>
+                                    <input type="text" class="form-control" id="nombre" required>
+                                    <div class="invalid-feedback">Por favor ingrese su nombre completo</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                    <div class="invalid-feedback">Por favor ingrese un email válido</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefono" pattern="[0-9]{10}" required>
+                                    <div class="invalid-feedback">Ingrese un teléfono válido (10 dígitos)</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="fechaNacimiento" required>
+                                    <div class="invalid-feedback">Por favor ingrese su fecha de nacimiento</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <div class="password-container">
+                                        <input type="password" class="form-control" id="password" minlength="8" required>
+                                        <span class="password-toggle" id="passwordToggle">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div class="form-text">Mínimo 8 caracteres, con al menos un número y una mayúscula</div>
+                                    <div class="invalid-feedback">La contraseña no cumple los requisitos</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                                    <div class="password-container">
+                                        <input type="password" class="form-control" id="confirmPassword" required>
+                                        <span class="password-toggle" id="confirmPasswordToggle">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div class="invalid-feedback">Las contraseñas no coinciden</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección</label>
+                                <textarea class="form-control" id="direccion" rows="2" required></textarea>
+                                <div class="invalid-feedback">Por favor ingrese su dirección</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">Género</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="genero" id="masculino" value="masculino" checked>
+                                        <label class="form-check-label" for="masculino">Masculino</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="genero" id="femenino" value="femenino">
+                                        <label class="form-check-label" for="femenino">Femenino</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="genero" id="otro" value="otro">
+                                        <label class="form-check-label" for="otro">Otro</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terminos" required>
+                                <label class="form-check-label" for="terminos">Acepto los términos y condiciones</label>
+                                <div class="invalid-feedback">Debe aceptar los términos y condiciones</div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-paper-plane me-2"></i>Registrarse
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card mb-5">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-database me-2"></i>Datos Registrados</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="section-title">Registros en Base de Datos</h4>
+                            <button id="refreshBtn" class="btn btn-outline-primary">
+                                <i class="fas fa-sync-alt me-2"></i>Actualizar
+                            </button>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
+                                        <th>Género</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataTable">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Cargando datos...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Proyecto Final de Programación Web | Implementado con Node.js, Express y SQLite | Listo para despliegue en la nube</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función para mostrar alertas
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.role = 'alert';
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+        
+        // Toggle password visibility
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+        
+        document.getElementById('confirmPasswordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('confirmPassword');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+        
+        // Validación de contraseña
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const feedback = this.nextElementSibling.nextElementSibling.nextElementSibling;
+            
+            // Validar contraseña: min 8 caracteres, al menos un número y una mayúscula
+            const hasMinLength = password.length >= 8;
+            const hasNumber = /\d/.test(password);
+            const hasUpperCase = /[A-Z]/.test(password);
+            
+            if (!hasMinLength || !hasNumber || !hasUpperCase) {
+                this.classList.add('is-invalid');
+                feedback.textContent = 'La contraseña debe tener al menos 8 caracteres, un número y una letra mayúscula';
+            } else {
+                this.classList.remove('is-invalid');
+            }
+            
+            // Validar confirmación de contraseña
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (confirmPassword.value && password !== confirmPassword.value) {
+                confirmPassword.classList.add('is-invalid');
+            } else if (confirmPassword.value) {
+                confirmPassword.classList.remove('is-invalid');
+            }
+        });
+        
+        // Validar que las contraseñas coincidan
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            
+            if (this.value !== password) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+        
+        // Validación de formulario
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validar campos
+            let isValid = true;
+            const fields = ['nombre', 'email', 'telefono', 'fechaNacimiento', 'password', 'confirmPassword', 'direccion'];
+            
+            fields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            // Validar contraseña
+            const password = document.getElementById('password').value;
+            const hasMinLength = password.length >= 8;
+            const hasNumber = /\d/.test(password);
+            const hasUpperCase = /[A-Z]/.test(password);
+            
+            if (!hasMinLength || !hasNumber || !hasUpperCase) {
+                document.getElementById('password').classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validar que las contraseñas coincidan
+            if (password !== document.getElementById('confirmPassword').value) {
+                document.getElementById('confirmPassword').classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                showAlert('Por favor complete todos los campos correctamente', 'danger');
+                return;
+            }
+            
+            // Crear objeto con los datos
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                fechaNacimiento: document.getElementById('fechaNacimiento').value,
+                password: password,
+                direccion: document.getElementById('direccion').value,
+                genero: document.querySelector('input[name="genero"]:checked').value
+            };
+            
+            try {
+                // Enviar datos al servidor
+                const response = await fetch('/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showAlert('Registro exitoso! Los datos se han guardado en la base de datos.', 'success');
+                    // Limpiar formulario
+                    this.reset();
+                    // Actualizar tabla
+                    fetchData();
+                } else {
+                    showAlert(`Error: ${result.error}`, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error de conexión con el servidor', 'danger');
+                console.error('Error:', error);
+            }
+        });
+        
+        // Función para obtener datos desde el servidor
+        async function fetchData() {
+            try {
+                const response = await fetch('/datos');
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('dataTable');
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No hay registros en la base de datos</td></tr>';
+                    return;
+                }
+                
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.nombre}</td>
+                        <td>${item.email}</td>
+                        <td>${item.telefono}</td>
+                        <td>${item.genero}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteRecord(${item.id})">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error al obtener datos:', error);
+                document.getElementById('dataTable').innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error al cargar datos</td></tr>';
+            }
+        }
+        
+        // Función para eliminar registro
+        async function deleteRecord(id) {
+            if (!confirm('¿Está seguro de eliminar este registro?')) return;
+            
+            try {
+                const response = await fetch(`/eliminar/${id}`, { method: 'DELETE' });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showAlert('Registro eliminado exitosamente', 'success');
+                    fetchData();
+                } else {
+                    showAlert(`Error: ${result.error}`, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error de conexión con el servidor', 'danger');
+                console.error('Error:', error);
+            }
+        }
+        
+        // Botón para actualizar datos
+        document.getElementById('refreshBtn').addEventListener('click', fetchData);
+        
+        // Cargar datos al inicio
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>
